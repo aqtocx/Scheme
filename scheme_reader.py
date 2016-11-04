@@ -148,7 +148,7 @@ def read_tail(src):
             src.remove_front()
             value = scheme_read(src)
             if src.remove_front() != ')':
-                raise SyntaxError('dotted list must have exactly one item after dot')
+                raise SyntaxError('expected one element after .')
             return value
             # END PROBLEM 2
         else:
