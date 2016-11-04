@@ -145,7 +145,11 @@ def read_tail(src):
             # END PROBLEM 1
         elif src.current() == '.':
             # BEGIN PROBLEM 2
-            "*** REPLACE THIS LINE ***"
+            src.remove_front()
+            value = scheme_read(src)
+            if src.remove_front() != ')':
+                raise SyntaxError('dotted list must have exactly one item after dot')
+            return value
             # END PROBLEM 2
         else:
             # BEGIN PROBLEM 1
