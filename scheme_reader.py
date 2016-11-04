@@ -115,7 +115,7 @@ def scheme_read(src):
     elif val == '(':
         # BEGIN PROBLEM 1
         "*** REPLACE THIS LINE ***"
-        return Pair(src.remove_front(), read_tail(src))
+        return read_tail(src)
         # END PROBLEM 1
     elif val == "'":
         # BEGIN PROBLEM 7B
