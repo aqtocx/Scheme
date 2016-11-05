@@ -46,6 +46,16 @@ j
 foo
 ;expect (lambda (x) (print (* x (+ 7 x))))
 
+;;; Tests for Problem 11 and 12
+(define (bar x) (define baz (lambda (y) (+ x y))) (baz 6))
+;expect bar
+(bar 9)
+;expect 15
+(define (foobar x y z) (define (foobaz z x y) (* x (+ z (- y x)))) (foobaz 4 z 8))
+;expect foobar
+(foobar 1 2 3)
+;expect 27
+
 ;;; **********************************
 
 ;;; These are examples from several sections of "The Structure
@@ -117,7 +127,7 @@ size
 (define circumference (* 2 pi radius))
 circumference
 ; expect 62.8318
-(exit)
+
 ;;; 1.1.4
 
 (define (square x) (* x x))
@@ -144,7 +154,7 @@ circumference
   (sum-of-squares (+ a 1) (* a 2)))
 (f 5)
 ; expect 136
-
+(exit)
 ;;; 1.1.6
 
 (define (abs x)

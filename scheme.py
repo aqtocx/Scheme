@@ -181,7 +181,7 @@ class LambdaProcedure(UserDefinedProcedure):
         """Make a frame that binds the formal parameters to ARGS, a Scheme list
         of values, for a lexically-scoped call evaluated in environment ENV."""
         # BEGIN PROBLEM 12
-        "*** REPLACE THIS LINE ***"
+        return self.env.make_child_frame(self.formals, args)
         # END PROBLEM 12
 
     def __str__(self):
