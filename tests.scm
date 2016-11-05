@@ -40,6 +40,12 @@ j
 (lambda (i j) (begin (* 7 i) (- i j)))
 ;expect (lambda (i j) (begin (* 7 i) (- i j)))
 
+;;; Tests for Problem 10
+(define (foo x) (print (* x (+ 7 x))))
+;expect foo
+foo
+;expect (lambda (x) (print (* x (+ 7 x))))
+
 ;;; **********************************
 
 ;;; These are examples from several sections of "The Structure
