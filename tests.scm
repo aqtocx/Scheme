@@ -15,12 +15,18 @@
 ;expect i
 i
 ;expect 108
-(define j (+ i (/ i 2)))
-;expect j
+(eval (define j (+ i (/ i 2))))
+;expect 162
 j
 ;expect 162
 
 ;;; Tests for Problem 7
+(eval (cons 'cdr '('((3 . 1) 4 . (1 . 5)))))
+;expect (4 1 . 5)
+(quote '(here 'i ('am)))
+;expect (quote (here (quote i) ((quote am))))
+'(quote (quote '(quote)))
+;expect (quote (quote (quote (quote))))
 
 ;;; These are examples from several sections of "The Structure
 ;;; and Interpretation of Computer Programs" by Abelson and Sussman.
