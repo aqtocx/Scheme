@@ -28,6 +28,14 @@ j
 '(quote (quote '(quote)))
 ;expect (quote (quote (quote (quote))))
 
+;;; Tests for Problem 8
+(begin 1 (define x (* 3 4)) (+ (- x 4) (* x 4)))
+;expect 56
+(begin (define x (begin (define y (* 6 2)) (+ y (/ y 3)))) (+ x y))
+;expect 28
+(eval (define z (begin (print (begin (odd? 6) (even? 7))) 99)))
+;expect False ; 99
+
 ;;; These are examples from several sections of "The Structure
 ;;; and Interpretation of Computer Programs" by Abelson and Sussman.
 
@@ -76,7 +84,7 @@ j
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Move the following (exit) line to run additional tests. ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(exit)
+;(exit)
 
 
 ;;; 1.1.2
@@ -97,7 +105,7 @@ size
 (define circumference (* 2 pi radius))
 circumference
 ; expect 62.8318
-
+(exit)
 ;;; 1.1.4
 
 (define (square x) (* x x))
