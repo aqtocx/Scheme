@@ -138,7 +138,12 @@ class PrimitiveProcedure(Procedure):
             python_args.append(args.first)
             args = args.second
         # BEGIN PROBLEM 4
-        "*** REPLACE THIS LINE ***"
+        if self.use_env:
+            python_args.append(env)
+        try:
+            return self.fn(*python_args)
+        except TypeError:
+            raise SchemeError('incorrect number of arguments to {0} ({1} given)'.format(self.name, len(python_args)))
         # END PROBLEM 4
 
 class UserDefinedProcedure(Procedure):
