@@ -8,8 +8,6 @@
 
 ;;; **********************************
 ;;; *** Add more of your own here! ***
-;;; **********************************
-
 ;;; Tests for Problem 6
 (define i (* (+ (/ 6 2) (* 4 1) (- 7 2)) (- 4 1) (+ 1 2)))
 ;expect i
@@ -35,6 +33,14 @@ j
 ;expect 28
 (eval (define z (begin (print (begin (odd? 6) (even? 7))) 99)))
 ;expect False ; 99
+
+;;; Tests for Problem 9
+(lambda (z) (nil))
+;expect (lambda (z) (()))
+(lambda (i j) (begin (* 7 i) (- i j)))
+;expect (lambda (i j) (begin (* 7 i) (- i j)))
+
+;;; **********************************
 
 ;;; These are examples from several sections of "The Structure
 ;;; and Interpretation of Computer Programs" by Abelson and Sussman.
