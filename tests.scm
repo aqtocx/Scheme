@@ -64,6 +64,20 @@ foo
 (and (or) (and))
 ;expect False
 
+;;; Tests for Problem 14
+(cond ((or))
+      ((equal? 'd 9) 10)
+      (else (define x (- 3 5)) (define x (+ x 10)) x)
+  )
+;expect 8
+(cond ((or))
+      ((null? '(1 2 3)) True)
+  )
+;expect
+(cond ((list? '(1 2)))
+  )
+;expect True
+
 ;;; **********************************
 
 ;;; These are examples from several sections of "The Structure
