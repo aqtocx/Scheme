@@ -50,7 +50,11 @@ def scheme_apply(procedure, args, env):
 def eval_all(expressions, env):
     """Evaluate a Scheme list of EXPRESSIONS & return the value of the last."""
     # BEGIN PROBLEM 8
-    "*** REPLACE THIS LINE ***"
+    if expressions is nil:
+        return None
+    while expressions.second is not nil:
+        scheme_eval(expressions.first, env)
+        expressions = expressions.second
     return scheme_eval(expressions.first, env)
     # END PROBLEM 8
 
@@ -101,7 +105,11 @@ class Frame:
         """
         child = Frame(self) # Create a new child with self as the parent
         # BEGIN PROBLEM 11
-        "*** REPLACE THIS LINE ***"
+        if len(formals) != len(vals):
+            raise SchemeError('number of argument values does not match with the number of formal parameters')
+        while formals is not nil:
+            child.define(formals.first, vals.first)
+            formals, vals = formals.second, vals.second
         # END PROBLEM 11
         return child
 
@@ -173,7 +181,7 @@ class LambdaProcedure(UserDefinedProcedure):
         """Make a frame that binds the formal parameters to ARGS, a Scheme list
         of values, for a lexically-scoped call evaluated in environment ENV."""
         # BEGIN PROBLEM 12
-        "*** REPLACE THIS LINE ***"
+        return self.env.make_child_frame(self.formals, args)
         # END PROBLEM 12
 
     def __str__(self):
@@ -207,11 +215,14 @@ def do_define_form(expressions, env):
     if scheme_symbolp(target):
         check_form(expressions, 2, 2)
         # BEGIN PROBLEM 6
-        "*** REPLACE THIS LINE ***"
+        env.define(target, scheme_eval(expressions.second.first, env))  #expressions.second is the entire expression to be assigned to target
+        return target
         # END PROBLEM 6
     elif isinstance(target, Pair) and scheme_symbolp(target.first):
         # BEGIN PROBLEM 10
-        "*** REPLACE THIS LINE ***"
+        formals, body = target.second, expressions.second
+        env.define(target.first, LambdaProcedure(formals, body, env))
+        return target.first
         # END PROBLEM 10
     else:
         bad_target = target.first if isinstance(target, Pair) else target
@@ -221,7 +232,7 @@ def do_quote_form(expressions, env):
     """Evaluate a quote form."""
     check_form(expressions, 1, 1)
     # BEGIN PROBLEM 7
-    "*** REPLACE THIS LINE ***"
+    return expressions.first
     # END PROBLEM 7
 
 def do_begin_form(expressions, env):
@@ -235,7 +246,7 @@ def do_lambda_form(expressions, env):
     formals = expressions.first
     check_formals(formals)
     # BEGIN PROBLEM 9
-    "*** REPLACE THIS LINE ***"
+    return LambdaProcedure(formals, expressions.second, env)    #body = expressions.second
     # END PROBLEM 9
 
 def do_if_form(expressions, env):
@@ -249,13 +260,25 @@ def do_if_form(expressions, env):
 def do_and_form(expressions, env):
     """Evaluate a short-circuited and form."""
     # BEGIN PROBLEM 13
-    "*** REPLACE THIS LINE ***"
+    if len(expressions) == 0:
+        return True
+    elif expressions.second is nil:
+        return scheme_eval(expressions.first, env)
+    elif scheme_falsep(scheme_eval(expressions.first, env)):
+        return False
+    else:
+        return do_and_form(expressions.second, env)
     # END PROBLEM 13
 
 def do_or_form(expressions, env):
     """Evaluate a short-circuited or form."""
     # BEGIN PROBLEM 13
-    "*** REPLACE THIS LINE ***"
+    if len(expressions) == 0:
+        return False
+    elif not scheme_falsep(scheme_eval(expressions.first, env)):
+        return scheme_eval(expressions.first, env)
+    else:
+        return do_or_form(expressions.second, env)
     # END PROBLEM 13
 
 def do_cond_form(expressions, env):
@@ -271,7 +294,9 @@ def do_cond_form(expressions, env):
             test = scheme_eval(clause.first, env)
         if scheme_truep(test):
             # BEGIN PROBLEM 14
-            "*** REPLACE THIS LINE ***"
+            if clause.second is nil:
+                return test
+            return eval_all(clause.second, env)
             # END PROBLEM 14
         expressions = expressions.second
 
@@ -289,7 +314,13 @@ def make_let_frame(bindings, env):
     if not scheme_listp(bindings):
         raise SchemeError('bad bindings list in let form')
     # BEGIN PROBLEM 15
-    "*** REPLACE THIS LINE ***"
+    let_env = env.make_child_frame(nil, nil)
+    while bindings is not nil:
+        check_form(bindings.first, 2, 2)    #must have 1 formal and 1 val
+        check_formals(Pair(bindings.first.first, nil))  #bindings.first.first is formal, and bindings.first.second.first is the expr for val
+        let_env.define(bindings.first.first, scheme_eval(bindings.first.second.first, env))
+        bindings = bindings.second
+    return let_env
     # END PROBLEM 15
 
 SPECIAL_FORMS = {
@@ -368,7 +399,8 @@ class MuProcedure(UserDefinedProcedure):
         self.body = body
 
     # BEGIN PROBLEM 16
-    "*** REPLACE THIS LINE ***"
+    def make_call_frame(self, args, env):
+        return env.make_child_frame(self.formals, args)
     # END PROBLEM 16
 
     def __str__(self):
@@ -384,7 +416,7 @@ def do_mu_form(expressions, env):
     formals = expressions.first
     check_formals(formals)
     # BEGIN PROBLEM 16
-    "*** REPLACE THIS LINE ***"
+    return MuProcedure(formals, expressions.second)
     # END PROBLEM 16
 
 SPECIAL_FORMS['mu'] = do_mu_form
