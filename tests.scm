@@ -56,6 +56,14 @@ foo
 (foobar 1 2 3)
 ;expect 27
 
+;;; Tests for Problem 13
+(eval (and (or 32 54 (define x 8)) (define x (* 1 2))))
+;expect 2
+(or (and (define x #f) x) #f)
+;expect False
+(and (or) (and))
+;expect False
+
 ;;; **********************************
 
 ;;; These are examples from several sections of "The Structure
