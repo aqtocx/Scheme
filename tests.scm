@@ -78,6 +78,16 @@ foo
   )
 ;expect True
 
+;;; Tests for Problem 15
+(define a 10)
+(define b 5)
+(let ((a 1) (b a) (c (+ b a))) (+ a b c))
+;expect a; b; 26
+(let ((m (* a b)) (y (+ a m b))) (cons x (cons y '(a b))))
+;expect Error
+(let ((1 8)) a)
+;expect Error
+
 ;;; **********************************
 
 ;;; These are examples from several sections of "The Structure
