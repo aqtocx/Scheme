@@ -88,6 +88,18 @@ foo
 (let ((1 8)) a)
 ;expect Error
 
+;;; Tests for Problem 16
+(define q 2)
+(define (f p) (lambda () (+ p q)))
+((f 3))
+;expect q; f; 5
+(define (g p) (mu () (+ p q)))
+((g 3))
+;expect g; Error
+(define p 3)
+((g 3))
+;expect p; 5
+
 ;;; **********************************
 
 ;;; These are examples from several sections of "The Structure
