@@ -12,7 +12,9 @@
   )
 
 (define (cons-all first rests)
-  'replace-this-line)
+    (define (make-cons s) (cons first s))
+  (map make-cons rests)
+  )
 
 (define (zip s1 s2)
 	(if (or (null? s1) (null? s2))
