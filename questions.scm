@@ -5,7 +5,11 @@
 
 ; Some utility functions that you may find useful to implement.
 (define (map proc items)
-  'replace-this-line)
+  (if (null? items)
+    nil
+    (cons (proc (car items)) (map proc (cdr items)))
+    )
+  )
 
 (define (cons-all first rests)
   'replace-this-line)
