@@ -17,7 +17,7 @@
   )
 
 (define (zip s)
- 'replace-this-line
+ (cons (map car s) (cons (map cadr s) nil))
     )
 
 
