@@ -12,19 +12,27 @@
   )
 
 (define (cons-all first rests)
-  'replace-this-line)
-
-(define (zip s1 s2)
-	(if (or (null? s1) (null? s2))
-		nil
-		(cons(list (car s1) (car s2)) (zip (cdr s1) (cdr s2)))
-		)
+    (define (make-cons s) (cons first s))
+  (map make-cons rests)
   )
+
+(define (zip s)
+ (cons (map car s) (cons (map cadr s) nil))
+    )
+
+
+
 
 ;; Problem 17
 ;; Returns a list of two-element lists
 (define (enumerate s)
   ; BEGIN PROBLEM 17
+  (define (zip2 s1 s2)
+    (if (or (null? s1) (null? s2))
+        nil
+        (cons(list (car s1) (car s2)) (zip2 (cdr s1) (cdr s2)))
+        )
+  )
   (define (index lst begin-index)
     (if (null? lst)
         nil
@@ -33,7 +41,7 @@
     )
   (if (null? s)
     nil
-    (zip (index s 0) s)
+    (zip2 (index s 0) s)
     )
   )
   ; END PROBLEM 17
