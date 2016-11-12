@@ -16,34 +16,22 @@
   (map make-cons rests)
   )
 
-(define (zip s)
- (cons (map car s) (cons (map cadr s) nil))
+(define (zip pairs)
+ (cons (map car pairs) (cons (map cadr pairs) nil))
     )
-
-
-
 
 ;; Problem 17
 ;; Returns a list of two-element lists
 (define (enumerate s)
   ; BEGIN PROBLEM 17
-  (define (zip2 s1 s2)
-    (if (or (null? s1) (null? s2))
-        nil
-        (cons(list (car s1) (car s2)) (zip2 (cdr s1) (cdr s2)))
-        )
-  )
-  (define (index lst begin-index)
-    (if (null? lst)
-        nil
-        (cons begin-index (index (cdr lst) (+ 1 begin-index)) )
-        )
-    )
-  (if (null? s)
-    nil
-    (zip2 (index s 0) s)
+  (define (enum s index)
+    (if (null? s)
+      nil
+      (cons (cons index (cons (car s) nil)) (enum (cdr s) (+ index 1)))
     )
   )
+  (enum s 0)
+)
   ; END PROBLEM 17
 
 ;; Problem 18
