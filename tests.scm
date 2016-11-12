@@ -100,6 +100,23 @@ foo
 ((g 3))
 ;expect p; 5
 
+(load 'questions)
+;;; Tests for Problem 17
+(enumerate '())
+;expect ()
+(enumerate '((1 (1)) (2 ((1) 3))))
+;expect ((0 (1 (1))) (1 (2 ((1) 3))))
+
+;;; Tests for Problem 18
+(list-change 5 '())
+;expect ()
+(list-change 0 '(4 3 2 1))
+;expect (())
+(list-change 24 '(25 10 5 1))
+;expect ((10 10 1 1 1 1) (10 5 5 1 1 1 1) (10 5 1 1 1 1 1 1 1 1 1) (10 1 1 1 1 1 1 1 1 1 1 1 1 1 1) (5 5 5 5 1 1 1 1) (5 5 5 1 1 1 1 1 1 1 1 1) (5 5 1 1 1 1 1 1 1 1 1 1 1 1 1 1) (5 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1) (1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1))
+(list-change 7 '(4 3 2 1))
+;expect ((4 3) (4 2 1) (4 1 1 1) (3 3 1) (3 2 2) (3 2 1 1) (3 1 1 1 1) (2 2 2 1) (2 2 1 1 1) (2 1 1 1 1 1) (1 1 1 1 1 1 1))
+
 ;;; **********************************
 
 ;;; These are examples from several sections of "The Structure

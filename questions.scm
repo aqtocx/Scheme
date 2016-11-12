@@ -12,8 +12,7 @@
   )
 
 (define (cons-all first rests)
-    (define (make-cons s) (cons first s))
-  (map make-cons rests)
+  (map (lambda (s) (cons first s)) rests)  
   )
 
 (define (zip pairs)
@@ -31,14 +30,22 @@
     )
   )
   (enum s 0)
-)
+  )
   ; END PROBLEM 17
 
 ;; Problem 18
 ;; List all ways to make change for TOTAL with DENOMS
 (define (list-change total denoms)
   ; BEGIN PROBLEM 18
-  'replace-this-line
+  (cond ((null? denoms) nil)
+        ((< total 0) nil)
+        ((= total 0) (cons nil nil))
+        ((< total (car denoms)) (list-change total (cdr denoms)))
+        (else (define with-max-denom (cons-all (car denoms) (list-change (- total (car denoms)) denoms)))
+              (define without-max-denom (list-change total (cdr denoms)))
+              (append with-max-denom without-max-denom)
+          )
+    )
   )
   ; END PROBLEM 18
 
