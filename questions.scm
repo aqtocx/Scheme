@@ -37,9 +37,9 @@
 ;; List all ways to make change for TOTAL with DENOMS
 (define (list-change total denoms)
   ; BEGIN PROBLEM 18
-  (cond ((null? denoms) nil)
-        ((< total 0) nil)
-        ((= total 0) (cons nil nil))
+  (cond ((null? denoms) nil)  ;impossible to partition
+        ((< total 0) nil)     ;impossible to partition
+        ((= total 0) (cons nil nil))  ;one way to partition - empty
         ((< total (car denoms)) (list-change total (cdr denoms)))
         (else (define with-max-denom (cons-all (car denoms) (list-change (- total (car denoms)) denoms)))
               (define without-max-denom (list-change total (cdr denoms)))
@@ -63,12 +63,12 @@
 (define (let-to-lambda expr)
   (cond ((atom? expr)
          ; BEGIN PROBLEM 19
-         'replace-this-line
+         expr
          ; END PROBLEM 19
          )
         ((quoted? expr)
          ; BEGIN PROBLEM 19
-         'replace-this-line
+         expr
          ; END PROBLEM 19
          )
         ((or (lambda? expr)
@@ -77,18 +77,18 @@
                (params (cadr expr))
                (body   (cddr expr)))
            ; BEGIN PROBLEM 19
-           'replace-this-line
+           (append (list 'lambda params) (let-to-lambda body))
            ; END PROBLEM 19
            ))
         ((let? expr)
          (let ((values (cadr expr))
                (body   (cddr expr)))
            ; BEGIN PROBLEM 19
-           'replace-this-line
+           (cons (cons 'lambda (cons (car (zip values)) (let-to-lambda body))) (let-to-lambda (cadr (zip values))))
            ; END PROBLEM 19
            ))
         (else
          ; BEGIN PROBLEM 19
-         'replace-this-line
+         (map let-to-lambda expr)
          ; END PROBLEM 19
          )))

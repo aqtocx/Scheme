@@ -117,6 +117,12 @@ foo
 (list-change 7 '(4 3 2 1))
 ;expect ((4 3) (4 2 1) (4 1 1 1) (3 3 1) (3 2 2) (3 2 1 1) (3 1 1 1 1) (2 2 2 1) (2 2 1 1 1) (2 1 1 1 1 1) (1 1 1 1 1 1 1))
 
+;;; Tests for Problem 19
+(let-to-lambda '(define (c x) (let ((a 3) (c 6)) (* x (+ a c)))))
+;expect (lambda (c x) ((lambda (a c) (* x (+ a c))) 3 6))
+(let-to-lambda '(let ((a (let ((b 1)) b)) (c 2)) (+ (let ((a (+ a 1))) a) c)))
+;expect ((lambda (a c) (+ ((lambda (a) a) (+ a 1)) c)) ((lambda (b) b) 1) 2)
+
 ;;; **********************************
 
 ;;; These are examples from several sections of "The Structure
