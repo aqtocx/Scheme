@@ -262,25 +262,45 @@ def do_if_form(expressions, env):
 def do_and_form(expressions, env):
     """Evaluate a short-circuited and form."""
     # BEGIN PROBLEM 13
-    if len(expressions) == 0:
-        return True
-    elif expressions.second is nil:
-        return scheme_eval(expressions.first, env, True)
-    elif scheme_falsep(scheme_eval(expressions.first, env)):
-        return False
-    else:
-        return do_and_form(expressions.second, env)
+#    if len(expressions) == 0:
+#        return True
+#    elif expressions.second is nil:
+#        return scheme_eval(expressions.first, env, True)
+#    elif scheme_falsep(scheme_eval(expressions.first, env)):
+#        return False
+#    else:
+#        return do_and_form(expressions.second, env)
+    result = True
+    while expressions is not nil:
+        if expressions.second is not nil:
+            result = scheme_eval(expressions.first, env)
+        elif expressions.second is nil:
+            result = scheme_eval(expressions.first, env, True)
+        if scheme_falsep(result):
+            return False
+        expressions = expressions.second
+    return result
     # END PROBLEM 13
 
 def do_or_form(expressions, env):
     """Evaluate a short-circuited or form."""
     # BEGIN PROBLEM 13
-    if len(expressions) == 0:
-        return False
-    elif not scheme_falsep(scheme_eval(expressions.first, env)):
-        return scheme_eval(expressions.first, env, True)
-    else:
-        return do_or_form(expressions.second, env)
+#    if len(expressions) == 0:
+#        return False
+#    elif not scheme_falsep(scheme_eval(expressions.first, env)):
+#        return scheme_eval(expressions.first, env, True)
+#    else:
+#        return do_or_form(expressions.second, env)
+    result = False
+    while expressions is not nil:
+        if expressions.second is not nil:
+            result = scheme_eval(expressions.first, env)
+        elif expressions.second is nil:
+            result = scheme_eval(expressions.first, env, True)
+        if scheme_truep(result):
+            return result
+        expressions = expressions.second
+    return result
     # END PROBLEM 13
 
 def do_cond_form(expressions, env):
