@@ -716,7 +716,7 @@ one-through-four
 ;;; Extra credit ;;;
 ;;;;;;;;;;;;;;;;;;;;
 
-(exit)
+;(exit)
 
 ; Tail call optimization tests
 
